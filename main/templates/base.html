@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Не Сам</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css"> <!-- Подключите локальный Bootstrap -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-image: url("../static/fon2.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+        /* Фоновый слой для улучшения читабельности текста */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+            z-index: -1;
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+         @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rotate {
+            display: inline-block;
+            animation: rotate 5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay"></div> <!-- Полупрозрачный фон -->
+    <header class="bg-gradient text-white text-center py-4 bg-primary">
+        <h1><img class="rotate rounded-circle bg-gradient" src="../static/wash.png" height="100px">  Добро пожаловать на портал клининговых услуг "Мой Не Сам"</h1>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">Мой Не Сам</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Создать заявку</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">История заявок</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="#">Вход</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5 align-content-center text-bg-primary bg-gradient">
+        <div class="text-center">
+    {% block content %}    <p>Мы рады видеть вас на нашем портале! Здесь вы можете создать заявку на клининговые услуги, просмотреть историю своих заявок и многое другое.</p>       {% endblock %}
+        </div>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Мой Не Сам. Все права защищены.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

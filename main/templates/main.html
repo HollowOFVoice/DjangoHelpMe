@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Планировщик Рабочего Дня</title>
+    <title>Мой не сам</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* PRESETS */
@@ -36,7 +36,7 @@
 
         body {
             font-family: 'Lato', sans-serif;
-            background-image: url("../static/fon.jpg");
+            background-image: url("../static/fon2.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             height: 100vh;
@@ -131,7 +131,7 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            background-color: #a86000; /* Цвет кнопки */
+            background-color: #0043a8; /* Цвет кнопки */
             margin: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -144,7 +144,7 @@
 
         .btn:hover {
             cursor: pointer;
-            background-color: #5e3802; /* Темнее при наведении */
+            background-color: #0055ef; /* Темнее при наведении */
         }
 
         /* FOOTER */
@@ -220,7 +220,7 @@
 <body>
 <div class="overlay"></div> <!-- Полупрозрачный фон -->
 <header class="header">
-    <p class="logo">Разрабоотка студенческого портфолио</p>
+    <p class="logo">Мой Не Сам</p>
     <nav class="nav">
         <ul class="nav-list">
             <li class="nav-item">
@@ -233,15 +233,15 @@
     </nav>
 </header>
 <main class="main">
-    <h1 class="heading">Создавайте и управляйте своим портфолио и проектами</h1>
-    <p class="text">Создавайте портфолио, загружайте свои проекты и просматривайте портфолио с проектами других людей с помощью нашего удобного инструмента.</p>
+    <h1 class="heading">Услуги клининга жилых и производственных помещений</h1>
+    <p class="text">Выполняем работы любой сложности и масштаба</p>
     <div>
         <a href="{% url 'login' %}" class="btn">Вход</a> <!-- Ссылка на страницу входа -->
         <a href="{% url 'register' %}" class="btn">Регистрация</a> <!-- Ссылка на страницу регистрации -->
     </div>
 </main>
 <footer class="footer">
-    <p class="copyright">&copy; 2025. Авторские права принадлежат Студенту группы ИС-4 Крапивину Илье</p>
+    <p class="copyright">&copy; 2025. Авторские права принадлежат Клиненговой компании "Мой не сам"</p>
 </footer>
 </body>
 </html>
