@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Планировщик Рабочего Дня</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* PRESETS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* KEYFRAMES */
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0);
+            }
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-image: url("../static/fon.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Центрируем по вертикали */
+            align-items: center; /* Центрируем по горизонтали */
+            position: relative;
+        }
+
+        /* Фоновый слой для улучшения читабельности текста */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+            z-index: 1;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 900px;
+            margin-bottom: 40px; /* Отступ снизу для разделения с основным контентом */
+            animation: fade-in 0.4s;
+            position: relative;
+            z-index: 2; /* Устанавливаем выше фона */
+        }
+
+        .logo {
+            color: rgba(225, 225, 225, 1);
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav {
+            padding: 20px 0;
+        }
+
+        .nav-list {
+            display: flex;
+            column-gap: 10px;
+        }
+
+        .nav-item {
+            margin-left: 25px;
+        }
+
+        .nav-link {
+            color: rgba(225, 225, 225, 0.7);
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            color: rgba(225, 225, 225, 1);
+        }
+
+        /* MAIN */
+        .main {
+            color: #fff;
+            text-align: center;
+            animation: fade-in 0.4s 0.1s backwards;
+            position: relative;
+            z-index: 2; /* Устанавливаем выше фона */
+        }
+
+        .heading {
+            font-size: 60px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 0.9;
+        }
+
+        .text {
+            max-width: 600px;
+            font-size: 22px;
+            line-height: 1.4;
+            margin: 0 auto;
+            opacity: 0.9; /* Увеличиваем непрозрачность текста */
+        }
+
+        .btn {
+            display: inline-block; /* Чтобы кнопка выглядела как ссылка */
+            height: 60px;
+            width: 150px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            background-color: #a86000; /* Цвет кнопки */
+            margin: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: center; /* Центрируем текст в кнопке */
+            line-height: 60px; /* Выравниваем текст по вертикали */
+        }
+
+        .btn:hover {
+            cursor: pointer;
+            background-color: #5e3802; /* Темнее при наведении */
+        }
+
+        /* FOOTER */
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Центрируем содержимое подвала */
+            width: 900px;
+            margin-top: 40px; /* Отступ сверху для разделения с основным контентом */
+            color: #fff;
+            opacity: 0.8;
+            font-size: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fade-in 0.4s 0.2s backwards;
+            position: relative;
+            z-index: 2; /* Устанавливаем выше фона */
+        }
+
+        /* MEDIA QUERIES */
+        @media (max-width: 985px) {
+            .header {
+                width: 600px;
+            }
+
+            .heading {
+                font-size: 50px;
+            }
+
+            .text {
+                font-size: 18px;
+            }
+
+            .btn {
+                width: 120px;
+            }
+
+            .footer {
+                width: 600px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .header {
+                flex-direction: column;
+            }
+
+            .heading {
+                font-size: 40px;
+            }
+
+            .btn {
+                display: block;
+                width: 300px;
+                margin: 10px auto;
+            }
+
+            .footer {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .header {
+                width: 350px;
+            }
+
+            .footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="overlay"></div> <!-- Полупрозрачный фон -->
+<header class="header">
+    <p class="logo">Разрабоотка студенческого портфолио</p>
+    <nav class="nav">
+        <ul class="nav-list">
+            <li class="nav-item">
+
+            </li>
+            <li class="nav-item">
+
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+    <h1 class="heading">Создавайте и управляйте своим портфолио и проектами</h1>
+    <p class="text">Создавайте портфолио, загружайте свои проекты и просматривайте портфолио с проектами других людей с помощью нашего удобного инструмента.</p>
+    <div>
+        <a href="{% url 'login' %}" class="btn">Вход</a> <!-- Ссылка на страницу входа -->
+        <a href="{% url 'register' %}" class="btn">Регистрация</a> <!-- Ссылка на страницу регистрации -->
+    </div>
+</main>
+<footer class="footer">
+    <p class="copyright">&copy; 2025. Авторские права принадлежат Студенту группы ИС-4 Крапивину Илье</p>
+</footer>
+</body>
+</html>

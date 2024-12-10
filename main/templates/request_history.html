@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>История заявок</title>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-5">История ваших заявок</h2>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Услуга</th>
+                <th>Адрес</th>
+                <th>Статус</th>
+                <th>Дата и время</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.service.name }}</td>
+                <td>{{ request.address }}</td>
+                <td>{{ request.get_status_display }}</td>
+                <td>{{ request.date_time }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Нет заявок.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p class="mt-3"><a href="{% url 'create_request' %}">Создать новую заявку</a></p>
+</div>
+</body>
+</html>
