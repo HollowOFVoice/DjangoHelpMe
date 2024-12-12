@@ -1,20 +1,73 @@
 <!DOCTYPE html>
-<html lang="ег">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
     <title>Регистрация</title>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-image: url("../static/fon3.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+            position: relative;
+            margin: 0; /* Убираем отступы по умолчанию */
+        }
+
+        /* Фоновый слой для улучшения читабельности текста */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 400px; /* Ограничиваем ширину контейнера */
+            background-color: rgba(255, 255, 255, 0.8); /* Белый фон с прозрачностью */
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .mb-4 {
+            color: #ffffff;
+        }
+
+        .form-group input {
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        p a {
+            color: #007bff;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2 class="mt-5">Регистрация</h2>
-    <form method="post" class="mt-3">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-    </form>
-    <p class="mt-3">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
-</div>
+    <div class="overlay"></div> <!-- Полупрозрачный фон -->
+    <div class="container">
+        <h2 class="mb-4 text-center text-black">Регистрация</h2>
+        <form method="post" class="form-group text-dark">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+        </form>
+        <p class="mt-3 text-center">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+    </div>
 </body>
 </html>

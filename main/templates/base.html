@@ -51,22 +51,29 @@
             display: inline-block;
             animation: rotate 5s linear infinite;
         }
+        ul{
+            list-style-type: none;
+        }
+        .ahah{
+            border-radius: 20px;
+
+        }
     </style>
 </head>
 <body>
 <div class="overlay"></div> <!-- Полупрозрачный фон -->
-    <header class="bg-gradient text-white text-center py-4 bg-primary">
+    <header class="bg-gradient text-white text-center py-4 bg-primary  ">
         <h1><img class="rotate rounded-circle bg-gradient" src="../static/wash.png" height="100px">  Добро пожаловать на портал клининговых услуг "Мой Не Сам"</h1>
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">Мой Не Сам</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+            <a class="navbar-brand " href="#">Мой Не Сам</a>
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto " >
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'request' %}">Создать заявку</a>
                     </li>
@@ -81,7 +88,7 @@
         </div>
     </nav>
 
-    <main class="container my-5 align-content-center text-bg-primary bg-gradient">
+    <main class="container my-5 align-content-center text-bg-primary bg-gradient ahah">
         <div class="text-center">
     {% block content %}    <p>Мы рады видеть вас на нашем портале! Здесь вы можете создать заявку на клининговые услуги, просмотреть историю своих заявок и многое другое.</p>       {% endblock %}
         </div>

@@ -5,6 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 
 from main.models import Request
 
+
 class UserLoginForm(forms.Form):
     username = forms.CharField(label='Логин', max_length=150)
     password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
@@ -13,6 +14,12 @@ class UserLoginForm(forms.Form):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
+
+        # Проверка на пустые поля
+        if not username:
+            raise ValidationError("Логин не может быть пустым.")
+        if not password:
+            raise ValidationError("Пароль не может быть пустым.")
 
         # Пытаемся аутентифицировать пользователя
         user = authenticate(username=username, password=password)
@@ -31,15 +38,17 @@ class UserRegistrationForm(forms.ModelForm):
         model = get_user_model()
         fields = ['username', 'first_name', 'last_name', 'email']
         labels = {
-        'username': 'Имя пользователя',
-        'first_name': 'Имя',
-        'last_name': 'Фамилия',
-        'email': 'Почта',
+            'username': 'Имя пользователя',
+            'first_name': 'Имя',
+            'last_name': 'Фамилия',
+            'email': 'Почта',
         }
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get('password')
         confirm_password = cleaned_data.get('confirm_password')
+        email = cleaned_data.get('email')
 
         # Проверяем, что пароли совпадают
         if password and confirm_password and password != confirm_password:
@@ -50,6 +59,10 @@ class UserRegistrationForm(forms.ModelForm):
             validate_password(password)
         except ValidationError as e:
             raise ValidationError(f"Пароль не удовлетворяет требованиям: {e.messages}")
+
+        # Валидация email (проверка уникальности и правильности формата)
+        if email and get_user_model().objects.filter(email=email).exists():
+            raise ValidationError("Этот адрес электронной почты уже зарегистрирован.")
 
         return cleaned_data
 

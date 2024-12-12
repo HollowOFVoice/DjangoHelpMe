@@ -29,7 +29,7 @@
             <a href="{% url 'request_history'%}" class="btn btn-secondary">Просмотреть историю заявок</a>
                 {% if user.is_authenticated and user.is_staff %}
             <!-- Ссылка на админ панель, доступна только для администраторов -->
-            <a href="{% url 'admin_request_history' %}" class="btn">Админ панель</a>
+            <a href="{% url 'admin_request_history' %}" class="btn btn-secondary">Админ панель</a>
         {% endif %}
         </div>
 
