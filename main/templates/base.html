@@ -68,13 +68,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Создать заявку</a>
+                        <a class="nav-link" href="{% url 'request' %}">Создать заявку</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">История заявок</a>
+                        <a class="nav-link" href="{% url 'request_history'%}">История заявок</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link " href="#">Вход</a>
+                        <a class="nav-link " href="{% url 'main'%}">Вход</a>
                     </li>
                 </ul>
             </div>
