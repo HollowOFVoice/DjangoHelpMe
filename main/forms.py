@@ -1,118 +1,117 @@
-from django import forms
-from django.contrib.auth import get_user_model, authenticate
-from django.core.exceptions import ValidationError
-from django.contrib.auth.password_validation import validate_password
+from django import forms  # Импортируем модуль forms для создания форм
+from django.contrib.auth import get_user_model, authenticate  # Импортируем функции для получения модели пользователя и аутентификации
+from django.core.exceptions import ValidationError  # Импортируем класс для обработки ошибок валидации
+from django.contrib.auth.password_validation import validate_password  # Импортируем функцию для проверки пароля
 
-from main.models import Request
+from main.models import Request  # Импортируем модель Request из приложения main
 
 
-class UserLoginForm(forms.Form):
-    username = forms.CharField(label='Логин', max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
+class UserLoginForm(forms.Form):  # Определяем форму для входа пользователя
+    username = forms.CharField(label='Логин', max_length=150)  # Поле для ввода логина
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')  # Поле для ввода пароля с скрытым текстом
 
-    def clean(self):
-        cleaned_data = super().clean()
-        username = cleaned_data.get('username')
-        password = cleaned_data.get('password')
+    def clean(self):  # Переопределяем метод clean для валидации данных формы
+        cleaned_data = super().clean()  # Получаем очищенные данные из родительского метода
+        username = cleaned_data.get('username')  # Получаем логин из очищенных данных
+        password = cleaned_data.get('password')  # Получаем пароль из очищенных данных
 
         # Проверка на пустые поля
-        if not username:
-            raise ValidationError("Логин не может быть пустым.")
-        if not password:
-            raise ValidationError("Пароль не может быть пустым.")
+        if not username:  # Если логин пустой
+            raise ValidationError("Логин не может быть пустым.")  # Выбрасываем ошибку валидации
+        if not password:  # Если пароль пустой
+            raise ValidationError("Пароль не может быть пустым.")  # Выбрасываем ошибку валидации
 
         # Пытаемся аутентифицировать пользователя
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)  # Аутентификация пользователя
 
-        if user is None:
-            raise forms.ValidationError("Неверный логин или пароль.")
+        if user is None:  # Если пользователь не найден
+            raise forms.ValidationError("Неверный логин или пароль.")  # Выбрасываем ошибку валидации
 
-        return cleaned_data
+        return cleaned_data  # Возвращаем очищенные данные
 
 
-class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
-    confirm_password = forms.CharField(widget=forms.PasswordInput, label='Подтвердите пароль')
+class UserRegistrationForm(forms.ModelForm):  # Определяем форму для регистрации пользователя
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')  # Поле для ввода пароля
+    confirm_password = forms.CharField(widget=forms.PasswordInput, label='Подтвердите пароль')  # Поле для подтверждения пароля
 
-    class Meta:
-        model = get_user_model()
-        fields = ['username', 'first_name', 'last_name', 'email']
-        labels = {
+    class Meta:  # Вложенный класс Meta для настройки формы
+        model = get_user_model()  # Получаем модель пользователя
+        fields = ['username', 'first_name', 'last_name', 'email']  # Определяем поля формы
+        labels = {  # Задаем метки для полей формы
             'username': 'Имя пользователя',
             'first_name': 'Имя',
             'last_name': 'Фамилия',
             'email': 'Почта',
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        confirm_password = cleaned_data.get('confirm_password')
-        email = cleaned_data.get('email')
+    def clean(self):  # Переопределяем метод clean для валидации данных формы
+        cleaned_data = super().clean()  # Получаем очищенные данные из родительского метода
+        password = cleaned_data.get('password')  # Получаем пароль из очищенных данных
+        confirm_password = cleaned_data.get('confirm_password')  # Получаем подтверждение пароля
+        email = cleaned_data.get('email')  # Получаем email
 
         # Проверяем, что пароли совпадают
-        if password and confirm_password and password != confirm_password:
-            raise ValidationError("Пароли не совпадают.")
+        if password and confirm_password and password != confirm_password:  # Если пароли не совпадают
+            raise ValidationError("Пароли не совпадают.")  # Выбрасываем ошибку валидации
 
         # Проверка пароля
         try:
-            validate_password(password)
-        except ValidationError as e:
-            raise ValidationError(f"Пароль не удовлетворяет требованиям: {e.messages}")
+            validate_password(password)  # Проверяем, удовлетворяет ли пароль требованиям
+        except ValidationError as e:  # Если возникают ошибки валидации
+            raise ValidationError(f"Пароль не удовлетворяет требованиям: {e.messages}")  # Выбрасываем ошибку с сообщением
 
         # Валидация email (проверка уникальности и правильности формата)
-        if email and get_user_model().objects.filter(email=email).exists():
-            raise ValidationError("Этот адрес электронной почты уже зарегистрирован.")
+        if email and get_user_model().objects.filter(email=email).exists():  # Если email уже зарегистрирован
+            raise ValidationError("Этот адрес электронной почты уже зарегистрирован.")  # Выбрасываем ошибку валидации
 
-        return cleaned_data
+        return cleaned_data  # Возвращаем очищенные данные
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])
-        if commit:
-            user.save()
-        return user
+    def save(self, commit=True):  # Переопределяем метод save для сохранения пользователя
+        user = super().save(commit=False)  # Создаем пользователя, не сохраняя его в базе данных
+        user.set_password(self.cleaned_data['password'])  # Устанавливаем пароль (хэшируем его)
+        if commit:  # Если нужно сохранить в базе данных
+            user.save()  # Сохраняем пользователя
+        return user  # Возвращаем созданного пользователя
 
 
-class RequestForm(forms.ModelForm):
-    class Meta:
-        model = Request
-        fields = ['address', 'service', 'preferred_date_time', 'payment_type']
-        labels = {
+class RequestForm(forms.ModelForm):  # Определяем форму для создания заявки
+    class Meta:  # Вложенный класс Meta для настройки формы
+        model = Request  # Указываем модель Request
+        fields = ['address', 'service', 'preferred_date_time', 'payment_type']  # Определяем поля формы
+        labels = {  # Задаем метки для полей формы
             'address': 'Адрес',
             'service': 'Услуга',
             'preferred_date_time': 'Дата и время',
             'payment_type': 'Тип оплаты',
         }
-        widgets = {
-            'preferred_date_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+        widgets = {  # Настраиваем виджеты для полей формы
+            'preferred_date_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),  # Поле для выбора даты и времени
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        address = cleaned_data.get('address')
-
+    def clean(self):  # Переопределяем метод clean для валидации данных формы
+        cleaned_data = super().clean()  # Получаем очищенные данные из родительского метода
+        address = cleaned_data.get('address')  # Получаем адрес из очищенных данных
 
         # Валидация, что все необходимые поля заполнены
-        if not address:
-            raise ValidationError("Адрес не может быть пустым.")
+        if not address:  # Если адрес пустой
+            raise ValidationError("Адрес не может быть пустым.")  # Выбрасываем ошибку валидации
 
-        return cleaned_data
+        return cleaned_data  # Возвращаем очищенные данные
 
 
-class AdminLoginForm(forms.Form):
-    username = forms.CharField(label='Логин', max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
+class AdminLoginForm(forms.Form):  # Определяем форму для входа администратора
+    username = forms.CharField(label='Логин', max_length=150)  # Поле для ввода логина
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')  # Поле для ввода пароля с скрытым текстом
 
-    def clean(self):
-        cleaned_data = super().clean()
-        username = cleaned_data.get('username')
-        password = cleaned_data.get('password')
+    def clean(self):  # Переопределяем метод clean для валидации данных формы
+        cleaned_data = super().clean()  # Получаем очищенные данные из родительского метода
+        username = cleaned_data.get('username')  # Получаем логин из очищенных данных
+        password = cleaned_data.get('password')  # Получаем пароль из очищенных данных
 
         # Пытаемся аутентифицировать пользователя
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)  # Аутентификация пользователя
 
-        if user is None or not user.is_staff:
-            raise forms.ValidationError("Неверный логин или пароль, или у вас нет прав администратора.")
+        if user is None or not user.is_staff:  # Если пользователь не найден или не является администратором
+            raise forms.ValidationError("Неверный логин или пароль, или у вас нет прав администратора.")  # Выбрасываем ошибку валидации
 
-        return cleaned_data
+        return cleaned_data  # Возвращаем очищенные данные
