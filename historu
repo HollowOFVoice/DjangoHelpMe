@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История заявок</title>
+    <!-- Подключение Bootstrap через CDN -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-image: url("../static/fon3.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Центрируем по вертикали */
+            align-items: center; /* Центрируем по горизонтали */
+            position: relative;
+        }
+
+        /* Фоновый слой для улучшения читабельности текста */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный фон */
+            z-index: -1;
+        }
+
+        .mb-4{
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="overlay"></div> <!-- Полупрозрачный фон -->
+    <div class="container mt-5">
+        <h1  class="mb-4">История заявок</h1>
+
+        {% if requests %}
+            <!-- Таблица с Bootstrap классами -->
+            <table class="table table-bordered table-striped">
+               <thead class="thead-dark">
+    <tr>
+        <th>Услуга</th>
+        <th>Адрес</th>
+        <th>Дата и время</th>
+        <th>Тип оплаты</th>
+        <th>Статус</th>
+        <th>Причина отмены</th> <!-- Новый столбец -->
+    </tr>
+</thead>
+<tbody>
+    {% for request in requests %}
+        <tr>
+            <td>{{ request.get_service_display }}</td>
+            <td>{{ request.address }}</td>
+            <td>{{ request.preferred_date_time }}</td>
+            <td>{{ request.get_payment_type_display }}</td>
+            <td>{{ request.get_status_display }}</td>
+            <td>
+                {% if request.status == 'canceled' %}
+                    {{ request.cancellation_reason }}
+                {% else %}
+                    ---
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+            </table>
+        {% else %}
+            <p class="alert alert-info">У вас нет заявок в истории.</p>
+        {% endif %}
+
+        <!-- Кнопка для возврата на главную -->
+        <a href="{% url 'home' %}" class="btn btn-primary mt-3">Вернуться на главную</a>
+    </div>
+
+    <!-- Подключение Bootstrap JS (для модальных окон, всплывающих подсказок и других компонентов) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-1CmRXCnp9FgN7hLPRHG+N2eSkHxIbvfnZuTxVtBhWo9UxlLJ5Bk6B0e/BmDp6jRW" crossorigin="anonymous"></script>
+</body>
+</html>
